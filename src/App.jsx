@@ -1,35 +1,54 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { Component } from "react";
+import biscoito from "./assets/img/biscoito.png";
+import "./assets/css/estilo.css";
+/* eslint-disable react/prop-types */
 
-function App() {
-  const [count, setCount] = useState(0)
+class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      textoFrase: "",
+    };
 
-  return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    this.quebraBiscoito = this.quebraBiscoito.bind(this);
+
+    this.frases = [
+      "Siga os bons e aprenda com eles.",
+      "O bom-senso vale mais do que muito conhecimento.",
+      "O riso é a menor distância entre duas pessoas.",
+      "Deixe de lado as preocupações e seja feliz.",
+      "Realize o óbvio, pense no improvável e conquiste o impossível.",
+      "Acredite em milagres, mas não dependa deles.",
+      "A maior barreira para o sucesso é o medo do fracasso.",
+    ];
+  }
+
+  quebraBiscoito() {
+    let state = this.state;
+    let numeroAleatorio = Math.floor(Math.random() * this.frases.length);
+    state.textoFrase = '" ' + this.frases[numeroAleatorio] + ' "';
+    this.setState(this.state);
+  }
+
+  render() {
+    return (
+      <div className="container">
+        <img src={biscoito} alt="biscoito" className="img" />
+        <Botao nome="Abrir Biscoito" acaoBtn={this.quebraBiscoito} />
+        <h3 className="textoFrase">{this.state.textoFrase}</h3>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    );
+  }
 }
 
-export default App
+class Botao extends Component {
+  render() {
+    return (
+      <div>
+        <button onClick={this.props.acaoBtn}>{this.props.nome}</button>
+      </div>
+    );
+  }
+}
+
+export default App;
